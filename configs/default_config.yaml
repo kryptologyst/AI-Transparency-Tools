@@ -1,0 +1,83 @@
+# Default configuration for AI Transparency Tools
+
+# Dataset configuration
+dataset:
+  name: "iris"
+  test_size: 0.3
+  val_size: 0.2
+  random_state: 42
+  scale_features: true
+
+# Model configuration
+model:
+  type: "random_forest"  # random_forest, logistic_regression, neural_network
+  random_forest:
+    n_estimators: 100
+    max_depth: null
+    min_samples_split: 2
+    min_samples_leaf: 1
+    random_state: 42
+  logistic_regression:
+    max_iter: 1000
+    random_state: 42
+    solver: "lbfgs"
+  neural_network:
+    hidden_sizes: [64, 32]
+    dropout: 0.2
+    learning_rate: 0.001
+    epochs: 100
+    batch_size: 32
+
+# Explanation methods
+explanations:
+  shap:
+    enabled: true
+    max_samples: 100
+    background_samples: 100
+  lime:
+    enabled: true
+    num_features: 10
+    num_samples: 5000
+    random_state: 42
+  integrated_gradients:
+    enabled: true
+    n_steps: 50
+    baseline_strategy: "zeros"
+
+# Evaluation configuration
+evaluation:
+  faithfulness:
+    enabled: true
+    method: "deletion"  # deletion, insertion
+    top_k: 5
+  stability:
+    enabled: true
+    n_runs: 5
+    noise_level: 0.01
+  completeness:
+    enabled: true
+    top_k_list: [1, 3, 5, 10]
+  robustness:
+    enabled: true
+    attack_strengths: [0.01, 0.05, 0.1]
+
+# Visualization configuration
+visualization:
+  figsize: [12, 8]
+  dpi: 100
+  style: "seaborn-v0_8"
+  color_palette: "viridis"
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/ai_transparency_tools.log"
+
+# Output configuration
+output:
+  save_explanations: true
+  save_plots: true
+  save_evaluations: true
+  output_dir: "results"
+  format: "json"  # json, pickle, csv
